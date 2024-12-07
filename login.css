@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #333;
+}
+
+header {
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  display: inline;
+  color: #4facfe;
+  font-size: 1.8rem;
+}
+
+.signup-btn {
+  float: right;
+  text-decoration: none;
+  color: #4facfe;
+  font-weight: bold;
+}
+
+.container {
+  width: 90%;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+/* Login Form Styling */
+.login-form {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #4facfe;
+}
+
+.login-form label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.login-form input:focus {
+  border: 1px solid #4facfe;
+  box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+}
+
+.login-form button {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #4facfe;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #007bff;
+}
+
+.login-form a {
+  text-decoration: none;
+  color: #4facfe;
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+}

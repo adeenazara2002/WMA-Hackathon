@@ -1,145 +1,105 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-    color: #333;
-  }
-  
-  .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-  }
-  
-  .search-bar {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-bar input {
-    padding: 0.5rem;
-    margin-right: 0.5rem;
-  }
-  
-  .login-btn {
-    background-color: #007bff;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .intro {
-    text-align: center;
-    margin: 2rem 0;
-  }
-  
-  .trending-topics {
-    margin: 2rem 0;
-  }
-  
-  .trending-topics .tags button {
-    background-color: #e9ecef;
-    border: none;
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .content {
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .blog-topics ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .articles {
-    flex: 1;
-  }
-  
-  .articles article {
-    background-color: #fff;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .newsletter {
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    padding: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .newsletter form {
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0;
-  }
-  
-  .newsletter input {
-    padding: 0.5rem;
-    margin-right: 0.5rem;
-  }
-  
-  .newsletter button {
-    padding: 0.5rem 1rem;
-    background-color: #0056b3;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  color: #333;
+}
 
-  /* CSS for signup form */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
 
-  .hidden {
-    display: none;
-  }
-  
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    position: relative;
-  }
-  
-  .modal-content h2 {
-    margin-top: 0;
-  }
-  
-  .modal-content .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-  }
-  
-  
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.login-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+}
+
+.intro {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.trending-topics {
+  margin: 2rem 0;
+}
+
+.trending-topics .tags button {
+  background-color: #e9ecef;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  gap: 2rem;
+}
+
+.blog-topics ul {
+  list-style: none;
+  padding: 0;
+}
+
+.articles {
+  flex: 1;
+}
+
+.articles article {
+  background-color: #fff;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter {
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.newsletter form {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.newsletter input {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.newsletter button {
+  padding: 0.5rem 1rem;
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
