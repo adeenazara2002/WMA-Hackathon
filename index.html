@@ -1,11 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coranu - Blog UI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+  <header>
+    <div class="container header">
+      <h1>Coranu</h1>
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button>🔍</button>
+      </div>
+      <button class="login-btn" onclick="window.location.href='signup.html'">LOGIN/REGISTER</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>Thoughts, Ideas, and Stories</h2>
+      <p>
+        A space where creativity flows, ideas take shape, and stories come to life.
+        Dive in, explore, and connect with insights that inspire and resonate.
+      </p>
+    </section>
+
+    <section class="trending-topics">
+      <h3>Trending Topics</h3>
+      <div class="tags">
+        <button>Design Thinking</button>
+        <button>Technology</button>
+        <button>Web3</button>
+        <button>Programming</button>
+        <button>AI</button>
+      </div>
+    </section>
+
+    <section class="content">
+      <aside class="blog-topics">
+        <h3>Blog Topics</h3>
+        <ul>
+          <li>Company</li>
+          <li>Design</li>
+          <li>Technology</li>
+          <li>Crypto</li>
+          <li>Artificial Intelligence</li>
+          <li>Work</li>
+        </ul>
+
+        <h3>Guide and Tools</h3>
+        <ul>
+          <li>Guidelines</li>
+          <li>Mentorship</li>
+          <li>Tutorial</li>
+          <li>Training</li>
+          <li>Career</li>
+          <li>Self Care</li>
+        </ul>
+      </aside>
+
+      <div class="articles">
+        <article>
+          <h4>Powerful Trading Tools and Features for Experienced Investors</h4>
+          <p>
+            I'm always trying to think of new and interesting business ideas. 
+            I generally try to come up with ideas by thinking of what I would want to do or see in the world...
+          </p>
+          <span>By Mark Tuchel • 7 min read</span>
+        </article>
+
+        <article>
+          <h4>Master JavaScript: 10 Essential Tips Every Developer Must Know</h4>
+          <p>
+            I'm always trying to think of new and interesting business ideas. 
+            I generally try to come up with ideas by thinking of what I would want to do or see in the world...
+          </p>
+          <span>By Harry Oland • 4 min read</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <section class="newsletter">
+      <h3>Stay up to date</h3>
+      <p>Join Our Newsletter</p>
+      <form>
+        <input type="email" placeholder="Enter your email...">
+        <button type="submit">Submit</button>
+      </form>
+      <small>*You can unsubscribe anytime</small>
+    </section>
+  </footer>
 </body>
 </html>

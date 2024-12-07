@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup - Coranu</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: #333;
+    }
+
+    header {
+      background-color: #ffffff;
+      padding: 1rem 2rem;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      display: inline;
+      color: #4facfe;
+      font-size: 1.8rem;
+    }
+
+    .login-btn {
+      float: right;
+      text-decoration: none;
+      color: #4facfe;
+      font-weight: bold;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      margin: 2rem auto;
+    }
+
+    /* Signup Form Styling */
+    .signup-form {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+
+    .signup-form h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #4facfe;
+    }
+
+    .signup-form label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      color: #333;
+    }
+
+    .signup-form input {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .signup-form input:focus {
+      border: 1px solid #4facfe;
+      box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+    }
+
+    .signup-form button {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #4facfe;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .signup-form button:hover {
+      background-color: #007bff;
+    }
+
+    .signup-form a {
+      text-decoration: none;
+      color: #4facfe;
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header">
+      <h1>Coranu</h1>
+      <a href="index.html" class="login-btn">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="signup-form">
+      <h2>Create Your Account</h2>
+      <form id="signupForm">
+        <label for="fullname">Full Name:</label>
+        <input type="text" id="fullname" placeholder="Enter your full name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email address" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        
+        <button type="submit">Sign Up</button>
+      </form>
+      <a href="login.html">Already have an account? Log in</a>
+    </section>
+  </main>
+
+  <script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjFfXcJfwi-HEXqyBShJQTJgINL2lCILI",
+      authDomain: "wma-hackathon.firebaseapp.com",
+      projectId: "wma-hackathon",
+      storageBucket: "wma-hackathon.firebasestorage.app",
+      messagingSenderId: "972518312500",
+      appId: "1:972518312500:web:64be8a37b21c37eb299861",
+      measurementId: "G-XX21SGE9R4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Handle signup form submission
+    const signupForm = document.getElementById('signupForm');
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fullname = document.getElementById('fullname').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        // Create a new user
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        alert('User signed up successfully!');
+        window.location.href = 'index.html'; // Redirect to home page after successful signup
+      } catch (error) {
+        alert(`Error: ${error.message}`);
+      }
+    });
+  </script>
+</body>
+</html>
