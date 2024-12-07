@@ -1,98 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coranu - Blog UI</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <div class="container header">
-      <h1>Coranu</h1>
-      <div class="search-bar">
-        <input type="text" placeholder="Search...">
-        <button>🔍</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coranu - Blog UI</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Firebase SDKs (Modular Version v9+) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+      import {
+        getFirestore,
+        collection,
+        query,
+        orderBy,
+        getDocs,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+      // Firebase Configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCjFfXcJfwi-HEXqyBShJQTJgINL2lCILI",
+        authDomain: "wma-hackathon.firebaseapp.com",
+        projectId: "wma-hackathon",
+        storageBucket: "wma-hackathon.firebasestorage.app",
+        messagingSenderId: "972518312500",
+        appId: "1:972518312500:web:64be8a37b21c37eb299861",
+        measurementId: "G-XX21SGE9R4",
+      };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Check if user is logged in and display the user name (instead of the user ID)
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // Show username (if available) instead of user ID
+            const userName = user.displayName || "Guest"; // Fallback to 'Guest' if displayName is not set
+            document.querySelector(
+              ".login-btn"
+            ).textContent = `Logged in as ${userName}`;
+          } else {
+            document.querySelector(".login-btn").textContent = "LOGIN/REGISTER"; // If no user is logged in
+          }
+        });
+
+        // Load posts from Firestore
+        async function loadPosts() {
+          const postsRef = collection(db, "posts");
+          const q = query(postsRef, orderBy("timestamp", "desc"));
+          const snapshot = await getDocs(q);
+
+          const postList = document.getElementById("postList");
+          postList.innerHTML = ""; // Clear existing posts
+
+          snapshot.forEach((doc) => {
+            const post = doc.data();
+            const postElement = document.createElement("article");
+            postElement.innerHTML = `
+            <h4>${post.heading}</h4>
+            <p>${post.content}</p>
+            <span>By ${post.userName}</span> <!-- Show userName here -->
+            <p>Category: ${post.category}</p>
+          `;
+            postList.appendChild(postElement);
+          });
+        }
+
+        // Initial load of posts
+        loadPosts();
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="container header">
+        <h1>Coranu</h1>
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." />
+          <button>🔍</button>
+        </div>
+        <button class="login-btn" onclick="window.location.href='signup.html'">
+          LOGIN/REGISTER
+        </button>
       </div>
-      <button class="login-btn" onclick="window.location.href='signup.html'">LOGIN/REGISTER</button>
-    </div>
-  </header>
+    </header>
 
-  <main class="container">
-    <section class="intro">
-      <h2>Thoughts, Ideas, and Stories</h2>
-      <p>
-        A space where creativity flows, ideas take shape, and stories come to life.
-        Dive in, explore, and connect with insights that inspire and resonate.
-      </p>
-    </section>
+    <main class="container">
+      <section class="intro">
+        <h2>Thoughts, Ideas, and Stories</h2>
+        <p>
+          A space where creativity flows, ideas take shape, and stories come to
+          life. Dive in, explore, and connect with insights that inspire and
+          resonate.
+        </p>
+      </section>
 
-    <section class="trending-topics">
-      <h3 class="mainHeadings">Trending Topics</h3>
-      <div class="tags">
-        <button>Design Thinking</button>
-        <button>Technology</button>
-        <button>Web3</button>
-        <button>Programming</button>
-        <button>AI</button>
-      </div>
-    </section>
+      <section class="trending-topics">
+        <h3 class="mainHeadings">Trending Topics</h3>
+        <div class="tags">
+          <button>Design Thinking</button>
+          <button>Technology</button>
+          <button>Web3</button>
+          <button>Programming</button>
+          <button>AI</button>
+        </div>
+      </section>
 
-    <section class="content">
-      <aside class="blog-topics">
-        <h3 class="mainHeadings">Blog Topics</h3>
-        <ul>
-          <li>Company</li>
-          <li>Design</li>
-          <li>Technology</li>
-          <li>Crypto</li>
-          <li>Artificial Intelligence</li>
-          <li>Work</li>
-        </ul>
+      <section class="content">
+        <aside class="blog-topics">
+          <h3 class="mainHeadings">Blog Topics</h3>
+          <ul>
+            <li>Company</li>
+            <li>Design</li>
+            <li>Technology</li>
+            <li>Crypto</li>
+            <li>Artificial Intelligence</li>
+            <li>Work</li>
+          </ul>
+        </aside>
 
-        <h3 class="mainHeadings">Guide and Tools</h3>
-        <ul>
-          <li>Guidelines</li>
-          <li>Mentorship</li>
-          <li>Tutorial</li>
-          <li>Training</li>
-          <li>Career</li>
-          <li>Self Care</li>
-        </ul>
-      </aside>
+        <div class="articles" id="postList">
+          <!-- Dynamic posts will be displayed here -->
+        </div>
+      </section>
+    </main>
 
-      <div class="articles">
-        <article>
-          <h4>Powerful Trading Tools and Features for Experienced Investors</h4>
-          <p>
-            I'm always trying to think of new and interesting business ideas. 
-            I generally try to come up with ideas by thinking of what I would want to do or see in the world...
-          </p>
-          <span>By Mark Tuchel • 7 min read</span>
-        </article>
-
-        <article>
-          <h4>Master JavaScript: 10 Essential Tips Every Developer Must Know</h4>
-          <p>
-            I'm always trying to think of new and interesting business ideas. 
-            I generally try to come up with ideas by thinking of what I would want to do or see in the world...
-          </p>
-          <span>By Harry Oland • 4 min read</span>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <section class="newsletter">
-      <h3>Stay up to date</h3>
-      <p>Join Our Newsletter</p>
-      <form>
-        <input type="email" placeholder="Enter your email...">
-        <button type="submit">Submit</button>
-      </form>
-      <small>*You can unsubscribe anytime</small>
-    </section>
-  </footer>
-</body>
+    <footer>
+      <section class="newsletter">
+        <h3>Stay up to date</h3>
+        <p>Join Our Newsletter</p>
+        <form>
+          <input type="email" placeholder="Enter your email..." />
+          <button type="submit">Submit</button>
+        </form>
+        <small>*You can unsubscribe anytime</small>
+      </section>
+    </footer>
+  </body>
 </html>

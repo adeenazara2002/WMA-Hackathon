@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Post - Coranu</title>
+  <link rel="stylesheet" href="createPost.css">
+
+  <!-- Firebase SDK using modules -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js';
+    import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js';
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjFfXcJfwi-HEXqyBShJQTJgINL2lCILI",
+      authDomain: "wma-hackathon.firebaseapp.com",
+      projectId: "wma-hackathon",
+      storageBucket: "wma-hackathon.firebasestorage.app",
+      messagingSenderId: "972518312500",
+      appId: "1:972518312500:web:64be8a37b21c37eb299861",
+      measurementId: "G-XX21SGE9R4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
+    const auth = getAuth(app);
+
+    // Handle form submission
+    window.onload = () => {
+      const form = document.getElementById('createPostForm');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent the form from submitting and refreshing the page
+
+        const heading = document.getElementById('heading').value;
+        const content = document.getElementById('content').value;
+        const category = document.getElementById('category').value;
+
+        // Check if fields are filled
+        if (heading && content && category) {
+          // Add the post to Firestore
+          addDoc(collection(firestore, 'posts'), {
+            heading: heading,
+            content: content,
+            category: category,
+            timestamp: serverTimestamp(),
+            userId: auth.currentUser ? auth.currentUser.uid : "anonymous"
+          })
+          .then(() => {
+            alert('Post created successfully!');
+            form.reset(); // Clear the form fields
+            window.location.href = 'index.html'; // Redirect to home page
+          })
+          .catch((error) => {
+            alert('Error creating post: ' + error.message);
+          });
+        } else {
+          alert('Please fill in all fields.');
+        }
+      });
+    };
+  </script>
+</head>
+<body>
+  <!-- Create Post Form -->
+  <h2>Create Post</h2>
+  <form id="createPostForm">
+    <label for="category">Category:</label>
+    <select id="category" required>
+      <option value="Company">Company</option>
+      <option value="Design">Design</option>
+      <option value="Crypto">Crypto</option>
+      <option value="Technology">Technology</option>
+      <option value="Artificial Intelligence">Artificial Intelligence</option>
+      <option value="Work">Work</option>
+    </select>
+    
+    <label for="heading">Post Heading:</label>
+    <input type="text" id="heading" placeholder="Post Heading" required>
+
+    <label for="content">Post Content:</label>
+    <textarea id="content" placeholder="Post Content" required></textarea>
+
+    <button type="submit">Submit Post</button>
+  </form>
+</body>
+</html>
