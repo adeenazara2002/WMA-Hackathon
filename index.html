@@ -6,73 +6,107 @@
     <title>Coranu - Blog UI</title>
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Firebase SDKs (Modular Version v9+) -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
       import {
         getAuth,
         onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+      } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
       import {
         getFirestore,
         collection,
         query,
         orderBy,
         getDocs,
-        serverTimestamp,
-      } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+        doc,
+        getDoc,
+      } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 
       // Firebase Configuration
       const firebaseConfig = {
-        apiKey: "AIzaSyCjFfXcJfwi-HEXqyBShJQTJgINL2lCILI",
-        authDomain: "wma-hackathon.firebaseapp.com",
-        projectId: "wma-hackathon",
-        storageBucket: "wma-hackathon.firebasestorage.app",
-        messagingSenderId: "972518312500",
-        appId: "1:972518312500:web:64be8a37b21c37eb299861",
-        measurementId: "G-XX21SGE9R4",
+        apiKey: 'AIzaSyCjFfXcJfwi-HEXqyBShJQTJgINL2lCILI',
+        authDomain: 'wma-hackathon.firebaseapp.com',
+        projectId: 'wma-hackathon',
+        storageBucket: 'wma-hackathon.appspot.com',
+        messagingSenderId: '972518312500',
+        appId: '1:972518312500:web:64be8a37b21c37eb299861',
+        measurementId: 'G-XX21SGE9R4',
       };
 
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener('DOMContentLoaded', function () {
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Check if user is logged in and display the user name (instead of the user ID)
+        let currentUserId = null;
+
+        // Check user authentication status and display user information
         onAuthStateChanged(auth, (user) => {
+          const loginBtn = document.querySelector('.login-btn');
           if (user) {
-            // Show username (if available) instead of user ID
-            const userName = user.displayName || "Guest"; // Fallback to 'Guest' if displayName is not set
-            document.querySelector(
-              ".login-btn"
-            ).textContent = `Logged in as ${userName}`;
+            currentUserId = user.uid;
+            const userName = user.displayName || 'Guest';
+            loginBtn.textContent = `Logged in as ${userName}`;
           } else {
-            document.querySelector(".login-btn").textContent = "LOGIN/REGISTER"; // If no user is logged in
+            currentUserId = null;
+            loginBtn.textContent = 'LOGIN/REGISTER';
           }
         });
 
         // Load posts from Firestore
         async function loadPosts() {
-          const postsRef = collection(db, "posts");
-          const q = query(postsRef, orderBy("timestamp", "desc"));
-          const snapshot = await getDocs(q);
+          try {
+            const postsRef = collection(db, 'posts');
+            const q = query(postsRef, orderBy('timestamp', 'desc'));
+            const snapshot = await getDocs(q);
 
-          const postList = document.getElementById("postList");
-          postList.innerHTML = ""; // Clear existing posts
+            const postList = document.getElementById('postList');
+            postList.innerHTML = ''; // Clear existing posts
 
-          snapshot.forEach((doc) => {
-            const post = doc.data();
-            const postElement = document.createElement("article");
-            postElement.innerHTML = `
-            <h4>${post.heading}</h4>
-            <p>${post.content}</p>
-            <span>By ${post.userName}</span> <!-- Show userName here -->
-            <p>Category: ${post.category}</p>
-          `;
-            postList.appendChild(postElement);
-          });
+            snapshot.forEach((doc) => {
+              const post = doc.data();
+              const postId = doc.id;
+
+              const postElement = document.createElement('article');
+              postElement.innerHTML = `
+                <h4>${post.heading}</h4>
+                <p>${post.content}</p>
+                <span>By ${post.userName || 'Anonymous'}</span>
+                <p>Category: ${post.category}</p>
+                <button onclick="viewPost('${postId}')">View Post</button>
+              `;
+              postList.appendChild(postElement);
+            });
+          } catch (error) {
+            console.error('Error loading posts:', error);
+          }
         }
+
+        // View Post
+        window.viewPost = async function (postId) {
+          try {
+            const postRef = doc(db, 'posts', postId);
+            const docSnapshot = await getDoc(postRef);
+
+            if (docSnapshot.exists()) {
+              const postData = docSnapshot.data();
+
+              // Store the post data in localStorage for later use
+              localStorage.setItem('postId', postId);
+              localStorage.setItem('heading', postData.heading);
+              localStorage.setItem('content', postData.content);
+              localStorage.setItem('category', postData.category);
+
+              // Redirect to createpost.html
+              window.location.href = 'createpost.html';
+            } else {
+              console.error('Post does not exist');
+            }
+          } catch (error) {
+            console.error('Error viewing post:', error);
+          }
+        };
 
         // Initial load of posts
         loadPosts();
@@ -127,9 +161,10 @@
           </ul>
         </aside>
 
-        <div class="articles" id="postList">
-          <!-- Dynamic posts will be displayed here -->
-        </div>
+
+  
+
+        <div class="articles" id="postList"></div>
       </section>
     </main>
 

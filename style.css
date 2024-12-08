@@ -65,6 +65,7 @@ body {
   padding: 0;
 }
 
+
 .articles {
   flex: 1;
 }
@@ -76,6 +77,7 @@ body {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 .newsletter {
   background-color: #007bff;
